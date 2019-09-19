@@ -138,6 +138,12 @@ fn upgrade_arch_linux(sudo: &Option<PathBuf>, cleanup: bool, run_type: RunType) 
             .arg("--devel")
             .env("PATH", path)
             .check_run()?;
+    } else if let Some(pikaur) = which("pikaur") {
+        run_type
+            .execute(pikaur)
+            .arg("-Syu")
+            .env("PATH", path)
+            .check_run()?;
     } else if let Some(sudo) = &sudo {
         run_type
             .execute(&sudo)
